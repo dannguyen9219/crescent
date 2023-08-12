@@ -1,15 +1,12 @@
-import Image from 'next/image'
+import { UserButton } from "@clerk/nextjs";
 
-
-// Application Client || Define Exports
-// =================================================================================================
-// =================================================================================================
-export default function Home() {
+export default function Example() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>
-        Crescent
-      </h1>
-    </main>
+    <>
+      <header>
+        <UserButton afterSignOutUrl="/" />
+      </header>
+      <div>Your pages content can go here.</div>
+    </>
   )
 }
