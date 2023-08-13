@@ -8,17 +8,17 @@ import { Inter } from 'next/font/google'
 // =================================================================================================
 // =================================================================================================
 import '../globals.css'
-import { BottomBar } from "@/components/shared/Bottombar"
+import { BottomBar } from "@/components/shared/BottomBar"
 import { LeftSideBar } from "@/components/shared/LeftSideBar"
 import { RightSideBar } from "@/components/shared/RightSideBar"
-import { TopBar } from "@/components/shared/Topbar"
+import { TopBar } from "@/components/shared/TopBar"
 
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: "Crescent",
-  description: "A Next.js Social Media Application",
+export const metadata = {
+  title: 'Crescent',
+  description: 'A Next.js Social Media Application',
 }
 
 
