@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 import { ChangeEvent } from "react"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
@@ -44,6 +45,7 @@ interface AccountProfileProps {
 // =================================================================================================
 // =================================================================================================
 export const AccountProfile = ({ user, btnTitle }: AccountProfileProps) => {
+  const [files, setFiles] = React.useState<File[]>([])
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -55,8 +57,28 @@ export const AccountProfile = ({ user, btnTitle }: AccountProfileProps) => {
     },
   })
 
-  const handleImage = (e: ChangeEvent, fieldChange: (value: string) => void) => {
+  const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
     e.preventDefault()
+
+    const fileReader = new FileReader()
+
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0]
+
+      setFiles(Array.from(e.target.files))
+
+      if (!file.type.includes("image")) {
+        return
+      }
+
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event.target?.result?.toString() || ""
+
+        fieldChange(imageDataUrl)
+      }
+
+      fileReader.readAsDataURL(file)
+    }
   }
 
   const onSubmit = (values: z.infer<typeof UserValidation>) => {
