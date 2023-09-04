@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache"
 // =================================================================================================
 // =================================================================================================
 import User from "../models/user.model"
+import Thread from "../models/thread.model"
 import { connectToDatabase } from "../mongoose"
 
 
@@ -24,8 +25,23 @@ interface IThreadParams {
 // =================================================================================================
 // =================================================================================================
 export async function createThread({ text, author, communityId, path }: IThreadParams) {
-  connectToDatabase()
 
-  const createdThread = await Thread.create()
+  try {
+    connectToDatabase()
 
+    const createdThread = await Thread.create({
+      text,
+      author,
+      community: null,
+    })
+
+    // Update user model
+    await User.findByIdAndUpdate(author, {
+      $push: { threads: createdThread._id },
+    })
+
+    revalidatePath(path)
+  } catch (error: any) {
+    throw new Error(`Failed to create thread: ${error.message}`)
+  }
 }

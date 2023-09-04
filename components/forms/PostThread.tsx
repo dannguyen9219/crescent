@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 // import { updateUser } from "@/lib/actions/user.actions"
 import { ThreadValidation } from "@/lib/validations/thread"
+import { createThread } from "@/lib/actions/thread.actions"
 
 
 
@@ -42,8 +43,15 @@ export const PostThread = ({ userId }: { userId: string }) => {
     },
   })
 
-  const onSubmit = async () => {
-    // await createThread()
+  const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+    await createThread({
+      text: values.thread,
+      author: userId,
+      communityId: null,
+      path: pathname,
+    })
+
+    router.push("/")
   }
 
   return (
