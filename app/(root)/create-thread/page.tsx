@@ -6,6 +6,7 @@ import { redirect } from "next/navigation"
 // =================================================================================================
 // =================================================================================================
 import { fetchUser } from "@/lib/actions/user.actions"
+import { PostThread } from "@/components/forms/PostThread"
 
 
 // Application Components || Define Exports
@@ -29,6 +30,7 @@ async function Page() {
       <h1 className="head-text">
         Create Post
       </h1>
+      <PostThread userId={userInfo._id} />
     </>
   )
 }
